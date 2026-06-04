@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sirshen Moodley — Johannesburg-based graphic designer specialising in brand identity, campaign design and digital.">
+  <title>Sirshen Moodley — Graphic Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1e1e1e;
+      --gold: #B8965A;
+      --light: #e8e0d4;
+      --muted: #9a9080;
+      --surface: #252525;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    #cursor {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      top: 0; left: 0;
+      transform: translate(-50%, -50%);
+      transition: width 0.35s ease, height 0.35s ease, background 0.35s ease,
+                  border-radius 0.35s ease, border 0.35s ease, opacity 0.35s ease;
+      border: 0px solid transparent;
+    }
+
+    #cursor.expanded {
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+    }
+
+    #cursor.link-hover {
+      width: 22px;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--gold);
+      border: none;
+    }
+
+    @media (max-width: 768px) { #cursor { display: none; } }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.75rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.5s ease, padding 0.4s ease, backdrop-filter 0.5s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(30, 30, 30, 0.96);
+      padding: 1.1rem 3.5rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--light);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 0.6rem;
+      z-index: 1002;
+      min-height: 44px;
+      min-width: 44px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--light);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(100%);
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu.open { transform: translateX(0); }
+
+    .mobile-menu ul { list-style: none; text-align: center; }
+    .mobile-menu ul li { margin: 1.75rem 0; }
+
+    .mobile-menu ul a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--light);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .mobile-menu ul a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      nav.scrolled { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Animated grain overlay */
+    .grain-overlay {
+      position: absolute;
+      inset: -100px;
+      width: calc(100% + 200px);
+      height: calc(100% + 200px);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.055;
+      pointer-events: none;
+      z-index: 1;
+      animation: grainShift 0.1s steps(1) infinite;
+    }
+
+    @keyframes grainShift {
+      0%   { transform: translate(0, 0); }
+      12%  { transform: translate(-3px, -4px); }
+      25%  { transform: translate(4px, 2px); }
+      37%  { transform: translate(-2px, 4px); }
+      50%  { transform: translate(3px, -2px); }
+      62%  { transform: translate(-4px, 3px); }
+      75%  { transform: translate(2px, -3px); }
+      87%  { transform: translate(4px, 4px); }
+      100% { transform: translate(-1px, -1px); }
+    }
+
+    /* Parallax geometric shapes */
+    .hero-shapes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .hero-shape {
+      position: absolute;
+      border: 1px solid rgba(184, 150, 90, 0.07);
+      will-change: transform;
+    }
+
+    .hero-shape-1 { width: 480px; height: 480px; top: 5%; left: -8%; transform: rotate(18deg); }
+    .hero-shape-2 { width: 340px; height: 340px; bottom: 10%; right: -4%; transform: rotate(-12deg); }
+    .hero-shape-3 { width: 220px; height: 660px; top: 15%; right: 18%; transform: rotate(6deg); border-color: rgba(184, 150, 90, 0.04); }
+    .hero-shape-4 {
+      width: 1px; height: 220px; border: none;
+      background: linear-gradient(to bottom, rgba(184, 150, 90, 0.12), transparent);
+      top: 28%; left: 14%;
+    }
+    .hero-shape-5 {
+      width: 140px; height: 1px; border: none;
+      background: linear-gradient(to right, rgba(184, 150, 90, 0.12), transparent);
+      top: 62%; left: 28%;
+    }
+    .hero-shape-6 { width: 180px; height: 180px; top: 55%; left: 60%; transform: rotate(30deg); border-color: rgba(184, 150, 90, 0.05); }
+
+    /* Hero content */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6.5vw, 5.5rem);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: var(--light);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      line-height: 1.1;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-name .word { display: flex; }
+
+    .hero-name .letter {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: letterDrop 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    .hero-name .word-gap {
+      display: inline-block;
+      width: 0.45em;
+    }
+
+    @keyframes letterDrop {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(0.6rem, 1.4vw, 0.78rem);
+      font-weight: 300;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: titleFade 0.9s ease forwards;
+    }
+
+    @keyframes titleFade {
+      from { opacity: 0; letter-spacing: 0.85em; }
+      to   { opacity: 1; letter-spacing: 0.55em; }
+    }
+
+    /* Gold line that draws across */
+    .hero-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 32%;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.3;
+      transform-origin: left center;
+      transform: scaleX(0);
+      animation: lineExpand 1s ease forwards;
+    }
+
+    @keyframes lineExpand {
+      from { transform: scaleX(0); opacity: 0; }
+      to   { transform: scaleX(1); opacity: 0.3; }
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+      transition: opacity 0.5s ease;
+    }
+
+    .scroll-indicator.hidden { opacity: 0 !important; }
+
+    .scroll-indicator span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: scrollPulse 2.2s ease infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.35; transform: translateY(0); }
+      50%       { opacity: 0.9;  transform: translateY(6px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-name {
+        font-size: clamp(1.8rem, 9vw, 3rem);
+        letter-spacing: 0.15em;
+      }
+      .hero-title { letter-spacing: 0.3em; }
+    }
+
+    /* ===== WORK SECTION ===== */
+    #work {
+      padding: 7rem 0 3rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      color: var(--light);
+      letter-spacing: 0.08em;
+    }
+
+    .work-item {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      margin-bottom: 9rem;
+      padding: 0 7.5vw;
+    }
+
+    .work-grid > .work-item:nth-child(even) { flex-direction: row-reverse; }
+
+    /* Image container */
+    .work-image-container {
+      flex: 0 0 57%;
+      position: relative;
+    }
+
+    .work-image-inner {
+      position: relative;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .work-image-inner img {
+      width: 100%;
+      height: 115%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.01s ease 0s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity;
+      transform: scale(1) translateY(-7%);
+    }
+
+    .work-item.reveal-active .work-image-inner img {
+      opacity: 1;
+      transition: opacity 0.4s ease 0.38s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Gold reveal overlay */
+    .reveal-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      z-index: 2;
+      clip-path: inset(0 100% 0 0);
+      pointer-events: none;
+    }
+
+    .work-grid > .work-item:nth-child(even) .reveal-overlay {
+      clip-path: inset(0 0 0 100%);
+    }
+
+    .work-item.reveal-active .reveal-overlay {
+      animation: sweepOdd 0.82s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .work-grid > .work-item:nth-child(even).reveal-active .reveal-overlay {
+      animation: sweepEven 0.82s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes sweepOdd {
+      0%   { clip-path: inset(0 100% 0 0); }
+      46%  { clip-path: inset(0 0 0 0); }
+      100% { clip-path: inset(0 0 0 100%); }
+    }
+
+    @keyframes sweepEven {
+      0%   { clip-path: inset(0 0 0 100%); }
+      46%  { clip-path: inset(0 0 0 0); }
+      100% { clip-path: inset(0 100% 0 0); }
+    }
+
+    /* Hover description overlay -- slides up physically */
+    .work-hover-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(16, 14, 12, 0.88);
+      padding: 1.75rem 2rem;
+      transform: translateY(100%);
+      transition: transform 0.44s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .work-image-inner:hover .work-hover-overlay { transform: translateY(0); }
+    /* Image scale on hover is handled by JS to avoid conflict with parallax transform */
+
+    .work-hover-overlay p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.08rem;
+      font-weight: 300;
+      color: var(--light);
+      line-height: 1.65;
+    }
+
+    /* Work text */
+    .work-text {
+      flex: 1;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease 0.55s, transform 0.65s ease 0.55s;
+    }
+
+    .work-item.reveal-active .work-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .work-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.82rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-bottom: 1.1rem;
+      opacity: 0.65;
+    }
+
+    .work-client {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      font-weight: 400;
+      color: var(--light);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.55rem;
+      line-height: 1.15;
+    }
+
+    .work-category {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.6rem;
+    }
+
+    .work-rule {
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    /* Mobile work layout */
+    @media (max-width: 768px) {
+      #work { padding: 5rem 0 2rem; }
+      .section-header { margin-bottom: 3.5rem; }
+
+      .work-grid > .work-item {
+        flex-direction: column !important;
+        padding: 0 1.5rem;
+        gap: 1.75rem;
+        margin-bottom: 5rem;
+      }
+
+      .work-image-container { flex: 0 0 auto; width: 100%; }
+
+      /* Simplified mobile: fade only, no sweep */
+      .reveal-overlay { display: none; }
+
+      .work-image-inner img {
+        height: 100%;
+        transform: none !important;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+
+      .work-item.reveal-active .work-image-inner img {
+        opacity: 1;
+        transition-delay: 0s;
+      }
+
+      .work-text {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+      }
+
+      .work-item.reveal-active .work-text {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .work-hover-overlay { display: none; }
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    #about {
+      padding: 7rem 10vw;
+      text-align: center;
+    }
+
+    .about-rule {
+      width: 100%;
+      max-width: 560px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(184, 150, 90, 0.35), transparent);
+      margin: 0 auto 5rem;
+    }
+
+    .about-rule-bottom {
+      margin: 5rem auto 0;
+    }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.3rem, 2.8vw, 2rem);
+      font-weight: 300;
+      color: var(--light);
+      line-height: 1.7;
+      letter-spacing: 0.015em;
+      max-width: 780px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .about-quote::before { content: '\201C'; }
+    .about-quote::after  { content: '\201D'; }
+
+    .about-bio {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto;
+      letter-spacing: 0.025em;
+    }
+
+    @media (max-width: 768px) {
+      #about { padding: 5rem 2rem; }
+    }
+
+    /* ===== CONTACT SECTION ===== */
+    #contact {
+      background: var(--surface);
+      padding: 8rem 3rem;
+      text-align: center;
+    }
+
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 300;
+      color: var(--light);
+      letter-spacing: 0.06em;
+      margin-bottom: 2.25rem;
+    }
+
+    .contact-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+      margin: 0 auto 2.25rem;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-decoration: underline;
+      text-underline-offset: 5px;
+      text-decoration-color: rgba(184, 150, 90, 0.5);
+      margin-bottom: 2.75rem;
+      transition: opacity 0.3s ease;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .contact-email:hover { opacity: 0.7; }
+
+    .cv-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(184, 150, 90, 0.6);
+      padding: 1rem 2.75rem;
+      text-decoration: none;
+      min-height: 44px;
+      transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+    }
+
+    .cv-button:hover {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+    }
+
+    @media (max-width: 768px) {
+      #contact { padding: 5rem 2rem; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg);
+      padding: 2rem 3rem;
+      text-align: center;
+      border-top: 1px solid rgba(184, 150, 90, 0.08);
+    }
+
+    footer p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    footer a:hover { opacity: 0.65; }
+  </style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+
+<!-- Navigation -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">SM</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- Mobile overlay menu -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <ul>
+    <li><a href="#work" class="mobile-link">Work</a></li>
+    <li><a href="#about" class="mobile-link">About</a></li>
+    <li><a href="#contact" class="mobile-link">Contact</a></li>
+  </ul>
+</div>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <div class="hero-shapes" aria-hidden="true">
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+    <div class="hero-shape hero-shape-3"></div>
+    <div class="hero-shape hero-shape-4"></div>
+    <div class="hero-shape hero-shape-5"></div>
+    <div class="hero-shape hero-shape-6"></div>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-name" id="heroName" aria-label="Sirshen Moodley"></h1>
+    <p class="hero-title" id="heroTitle">Graphic Designer</p>
+  </div>
+
+  <div class="hero-line" id="heroLine" aria-hidden="true"></div>
+
+  <div class="scroll-indicator" id="scrollIndicator" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Work -->
+<section id="work">
+  <div class="section-header">
+    <p class="section-label">Selected Work</p>
+    <h2 class="section-title">Projects</h2>
+  </div>
+
+  <div class="work-grid">
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/mag%20classic.jpg" alt="Magnum Classic Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Minimal luxury. A study in restraint for one of the world's most iconic ice cream brands.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">01</div>
+      <h3 class="work-client">Magnum</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/CORICRAFT.jpg" alt="Coricraft Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Premium retail campaign across a triptych format. Warm tones, editorial typography, considered negative space.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">02</div>
+      <h3 class="work-client">Coricraft</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/krispy%20cream.jpg" alt="Krispy Kreme Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Dark and dramatic. A high-contrast editorial approach to a World Chocolate Day promotion.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">03</div>
+      <h3 class="work-client">Krispy Kreme</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/scoop.jpg" alt="Paul's Homemade Ice Cream Brand Identity" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Playful typographic composition where the product becomes part of the word. Bold and confident.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">04</div>
+      <h3 class="work-client">Paul's Homemade Ice Cream</h3>
+      <p class="work-category">Brand Identity</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/SUNDAE.jpg" alt="Sundae Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>A bold multi-panel beauty and lifestyle campaign. Energetic, youthful, visually layered.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">05</div>
+      <h3 class="work-client">Sundae</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/GUESS.jpg" alt="Guess Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Fashion retail triptych. Clean model photography paired with considered graphic treatments.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">06</div>
+      <h3 class="work-client">Guess</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/PRINGLE.jpg" alt="Pringle of Scotland Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Premium fashion apparel. Restrained layout, heritage brand energy.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">07</div>
+      <h3 class="work-client">Pringle of Scotland</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/lancewood.jpg" alt="Lancewood Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>High-energy product campaign using bold typographic scale and vibrant photography composition.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">08</div>
+      <h3 class="work-client">Lancewood</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/Tropica.jpg" alt="Clover Tropika Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Tropical campaign energy. Layered product photography, illustrative backgrounds, script typography.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">09</div>
+      <h3 class="work-client">Clover Tropika</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/jungle%20energy%20drink.jpg" alt="Jungle Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Clean product campaign with illustrative environment. Brand consistency across a product range.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">10</div>
+      <h3 class="work-client">Jungle</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/nola%20cream.jpg" alt="Nola Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Product-led composition with lifestyle photography. Warm, appetising, on-brand.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">11</div>
+      <h3 class="work-client">Nola</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/pink%20al.jpg" alt="Essence Cosmetics Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Pantone-led cosmetics campaign. Colour story framing with layered product arrangement.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">12</div>
+      <h3 class="work-client">Essence Cosmetics</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/SUNLIGHT.jpg" alt="Sunlight Unilever Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>High-impact product visualisation. Explosive energy with colour contrast and dynamic composition.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">13</div>
+      <h3 class="work-client">Sunlight (Unilever)</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+  </div><!-- /.work-grid -->
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="about-rule"></div>
+  <blockquote class="about-quote">
+    Design is not decoration. It is the difference between a brand that is noticed and one that is felt.
+  </blockquote>
+  <p class="about-bio">
+    Sirshen Moodley is a Johannesburg-based graphic designer with over a decade of experience across brand identity, campaign design, print and digital. Trained at Vega School of Brand Leadership. Driven by craft, detail and a lifelong creative practice that extends well beyond the screen.
+  </p>
+  <div class="about-rule about-rule-bottom"></div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h2 class="contact-heading">Let's work together</h2>
+  <div class="contact-divider"></div>
+  <br>
+  <a href="mailto:sirshen.d@gmail.com" class="contact-email">sirshen.d@gmail.com</a>
+  <br>
+  <a href="./Sirshen_Moodley_CV.pdf" class="cv-button" target="_blank" rel="noopener">Download CV</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 Sirshen Moodley &mdash; <a href="https://studio.simmico.co.za" target="_blank" rel="noopener">studio.simmico.co.za</a></p>
+</footer>
+
+<script>
+  /* ===== HERO NAME ANIMATION ===== */
+  (function () {
+    const name = 'SIRSHEN MOODLEY';
+    const container = document.getElementById('heroName');
+    const title = document.getElementById('heroTitle');
+    const line = document.getElementById('heroLine');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+
+    const words = name.split(' ');
+    let letterIndex = 0;
+    const baseDelay = 120; /* ms from page load before first letter */
+    const letterDelay = 80;
+
+    words.forEach((word, wi) => {
+      const wordEl = document.createElement('span');
+      wordEl.className = 'word';
+      word.split('').forEach(char => {
+        const span = document.createElement('span');
+        span.className = 'letter';
+        span.textContent = char;
+        span.style.animationDelay = (baseDelay + letterIndex * letterDelay) + 'ms';
+        wordEl.appendChild(span);
+        letterIndex++;
+      });
+      container.appendChild(wordEl);
+      if (wi < words.length - 1) {
+        const gap = document.createElement('span');
+        gap.className = 'word-gap';
+        container.appendChild(gap);
+      }
+    });
+
+    const totalLetterTime = baseDelay + letterIndex * letterDelay;
+    const titleDelay = totalLetterTime + 100;
+    const lineDelay  = totalLetterTime + 320;
+    const indicatorDelay = totalLetterTime + 700;
+
+    title.style.animationDelay = titleDelay + 'ms';
+    line.style.animationDelay  = lineDelay + 'ms';
+    scrollIndicator.style.animationDelay = indicatorDelay + 'ms';
+  })();
+
+  /* ===== NAV SCROLL BEHAVIOUR ===== */
+  (function () {
+    const nav = document.getElementById('nav');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+      if (window.scrollY > window.innerHeight * 0.4) {
+        scrollIndicator.classList.add('hidden');
+      } else {
+        scrollIndicator.classList.remove('hidden');
+      }
+    }, { passive: true });
+  })();
+
+  /* ===== HAMBURGER & MOBILE MENU ===== */
+  (function () {
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function toggleMenu () {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+      mobileMenu.setAttribute('aria-hidden', mobileMenu.classList.contains('open') ? 'false' : 'true');
+    }
+
+    hamburger.addEventListener('click', toggleMenu);
+    hamburger.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') toggleMenu();
+    });
+
+    mobileLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      });
+    });
+  })();
+
+  /* ===== CUSTOM CURSOR ===== */
+  (function () {
+    if (window.innerWidth <= 768) return;
+
+    const cursor = document.getElementById('cursor');
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let cursorX = targetX;
+    let cursorY = targetY;
+    const smoothing = 0.12;
+
+    document.addEventListener('mousemove', function (e) {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    });
+
+    (function animateCursor () {
+      cursorX += (targetX - cursorX) * smoothing;
+      cursorY += (targetY - cursorY) * smoothing;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top  = cursorY + 'px';
+      requestAnimationFrame(animateCursor);
+    })();
+
+    /* Image hover: expand to ring */
+    document.querySelectorAll('.work-image-inner').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { cursor.classList.add('expanded'); });
+      el.addEventListener('mouseleave', function () { cursor.classList.remove('expanded'); });
+    });
+
+    /* Link/button hover: morph to line */
+    document.querySelectorAll('a, button, .hamburger, .cv-button').forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        if (!cursor.classList.contains('expanded')) {
+          cursor.classList.add('link-hover');
+        }
+      });
+      el.addEventListener('mouseleave', function () { cursor.classList.remove('link-hover'); });
+    });
+  })();
+
+  /* ===== HERO PARALLAX SHAPES ===== */
+  (function () {
+    const shapes = document.querySelectorAll('.hero-shape');
+    /* Base rotations matching CSS, tracked so we preserve them */
+    const rotations = [18, -12, 6, 0, 0, 30];
+    const factors   = [0.04, -0.03, 0.02, 0.05, -0.04, 0.03];
+
+    window.addEventListener('scroll', function () {
+      const scrollY = window.scrollY;
+      shapes.forEach(function (shape, i) {
+        const f   = factors[i] || 0.03;
+        const rot = rotations[i] || 0;
+        const ty  = (scrollY * f).toFixed(2);
+        shape.style.transform = rot !== 0
+          ? 'rotate(' + rot + 'deg) translateY(' + ty + 'px)'
+          : 'translateY(' + ty + 'px)';
+      });
+    }, { passive: true });
+  })();
+
+  /* ===== WORK: REVEAL ON SCROLL + IMAGE PARALLAX ===== */
+  (function () {
+    const items   = document.querySelectorAll('.work-item');
+    const isMobile = window.innerWidth <= 768;
+
+    /* IntersectionObserver for reveal animations */
+    const revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !entry.target.dataset.revealed) {
+          entry.target.dataset.revealed = '1';
+          entry.target.classList.add('reveal-active');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    items.forEach(function (item) { revealObserver.observe(item); });
+
+    /* Image parallax + hover scale on desktop */
+    if (!isMobile) {
+      /* Track hover state per image */
+      items.forEach(function (item) {
+        const inner = item.querySelector('.work-image-inner');
+        if (!inner) return;
+        inner.addEventListener('mouseenter', function () { inner.dataset.hovered = '1'; applyTransform(inner); });
+        inner.addEventListener('mouseleave', function () { inner.dataset.hovered = '';  applyTransform(inner); });
+      });
+
+      function applyTransform (inner) {
+        const img = inner.querySelector('img');
+        if (!img) return;
+        const vhCenter = window.innerHeight / 2;
+        const rect     = inner.getBoundingClientRect();
+        const elCenter = rect.top + rect.height / 2;
+        const offset   = ((elCenter - vhCenter) * 0.08).toFixed(2);
+        const scale    = inner.dataset.hovered ? 1.03 : 1;
+        img.style.transform = 'scale(' + scale + ') translateY(calc(-7% + ' + offset + 'px))';
+        img.style.transition = inner.dataset.hovered
+          ? 'transform 0.6s cubic-bezier(0.4,0,0.2,1)'
+          : 'transform 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease 0.38s';
+      }
+
+      function updateAllParallax () {
+        items.forEach(function (item) {
+          const inner = item.querySelector('.work-image-inner');
+          if (inner) applyTransform(inner);
+        });
+      }
+
+      window.addEventListener('scroll', updateAllParallax, { passive: true });
+      window.addEventListener('resize', updateAllParallax, { passive: true });
+      updateAllParallax();
+    }
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+Read /mnt/skills/public/frontend-design/SKILL.md
+Read [wherever your UI Pro Max skill lives -- check with: find /mnt/skills -name "*.md" | grep -i ui]
+Run: npm install -g ui-pro-cli
+Then build the portfolio...
+
+Install this and use this:
+
+npm install -g ui-pro-cli
+
+
+Build a stunning single-page portfolio website for graphic designer Sirshen Moodley. This must be production-grade, fully mobile responsive, and hosted as a single index.html with all CSS and JS embedded. any words should not have em dashes, ai slop and must be UK English
+
+FONTS: Cormorant Garamond (serif, headings) and Montserrat (sans, body) from Google Fonts.
+
+COLOURS:
+- Background: #1e1e1e
+- Gold accent: #B8965A
+- Light text: #e8e0d4
+- Muted text: #9a9080
+- Surface: #252525
+
+---
+
+HERO SECTION (full viewport height):
+- Subtle animated grain texture overlay on the background (CSS noise or SVG filter)
+- His name "SIRSHEN MOODLEY" assembles letter by letter on page load, each letter drops or fades in with a staggered delay, slow and cinematic, about 80ms between each letter
+- Below the name, "Graphic Designer" fades in after the name finishes, letter spacing animates from wide to normal
+- A single thin gold horizontal line draws across the screen left to right after the title appears
+- A slow subtle parallax background -- dark abstract geometric shapes or lines drift very slightly as the user scrolls
+- Scroll indicator arrow at the bottom pulses gently
+
+---
+
+WORK SECTION (the centrepiece):
+This is the most important part. Make it extraordinary.
+
+Layout: Full-width alternating -- odd pieces align left with text right, even pieces align right with text left. On mobile, stack vertically. Each piece takes up 85vw, generous spacing between them, almost magazine editorial pacing.
+
+SCROLL ANIMATIONS -- this is critical, make each one feel different:
+- Every image starts hidden. As it enters the viewport via IntersectionObserver, a gold-coloured overlay panel sweeps across the image from left to right (CSS clip-path animation) then disappears to reveal the image underneath -- slow, cinematic, about 800ms total
+- The alternating pieces come from opposite directions -- odd items reveal left to right, even items reveal right to left
+- After the image reveals, the client name and category text slides up from below with a slight delay
+- As the user scrolls past each piece, apply a very subtle parallax to the image itself -- it moves slightly slower than the scroll speed, creating depth
+- On desktop hover: a dark semi-transparent overlay slides up from the bottom of the image (not a fade, a physical slide), revealing the project description in Cormorant Garamond italic. The image itself scales up very slightly (1.03) with a slow ease.
+
+IMAGES AND METADATA (use these exact filenames):
+1. magnum_classic.jpg -- Client: Magnum -- Category: Digital Campaign -- "Minimal luxury. A study in restraint for one of the world's most iconic ice cream brands."
+2. coricraft.jpg -- Client: Coricraft -- Category: Digital Campaign -- "Premium retail campaign across a triptych format. Warm tones, editorial typography, considered negative space."
+3. krispy_kreme.jpg -- Client: Krispy Kreme -- Category: Digital Campaign -- "Dark and dramatic. A high-contrast editorial approach to a World Chocolate Day promotion."
+4. scoop.jpg -- Client: Paul's Homemade Ice Cream -- Category: Brand Identity -- "Playful typographic composition where the product becomes part of the word. Bold and confident."
+5. sundae.jpg -- Client: Sundae -- Category: Digital Campaign -- "A bold multi-panel beauty and lifestyle campaign. Energetic, youthful, visually layered."
+6. guess.jpg -- Client: Guess -- Category: Digital Campaign -- "Fashion retail triptych. Clean model photography paired with considered graphic treatments."
+7. pringle.jpg -- Client: Pringle of Scotland -- Category: Digital Campaign -- "Premium fashion apparel. Restrained layout, heritage brand energy."
+8. lancewood.jpg -- Client: Lancewood -- Category: Digital Campaign -- "High-energy product campaign using bold typographic scale and vibrant photography composition."
+9. tropica.jpg -- Client: Clover Tropika -- Category: Digital Campaign -- "Tropical campaign energy. Layered product photography, illustrative backgrounds, script typography."
+10. jungle_energy_drink.jpg -- Client: Jungle -- Category: Digital Campaign -- "Clean product campaign with illustrative environment. Brand consistency across a product range."
+11. nola_cream.jpg -- Client: Nola -- Category: Digital Campaign -- "Product-led composition with lifestyle photography. Warm, appetising, on-brand."
+12. pink_al.jpg -- Client: Essence Cosmetics -- Category: Digital Campaign -- "Pantone-led cosmetics campaign. Colour story framing with layered product arrangement."
+13. sunlight.jpg -- Client: Sunlight (Unilever) -- Category: Digital Campaign -- "High-impact product visualisation. Explosive energy with colour contrast and dynamic composition."
+
+---
+
+CUSTOM CURSOR (desktop only):
+- Replace the default cursor with a small gold dot (8px, #B8965A, border-radius 50%)
+- It follows the mouse with a slight lag (lerp interpolation, smoothing factor 0.12) for a trailing feel
+- On hover over any project image, the dot expands smoothly to 40px and the border becomes a thin gold ring (outline, not fill)
+- On hover over links and buttons, the dot morphs to a small horizontal line
+
+---
+
+ABOUT SECTION:
+- Full width, centred
+- Large Cormorant Garamond italic quote: "Design is not decoration. It is the difference between a brand that is noticed and one that is felt."
+- Below: short bio using this text exactly:
+  "Sirshen Moodley is a Johannesburg-based graphic designer with over a decade of experience across brand identity, campaign design, print and digital. Trained at Vega School of Brand Leadership. Driven by craft, detail and a lifelong creative practice that extends well beyond the screen."
+- Thin gold rule above and below the section
+
+---
+
+CONTACT AND CV SECTION:
+- Dark section, centred
+- "Let's work together" in large Cormorant Garamond
+- Email: sirshen.d@gmail.com as a gold underlined link
+- A gold-bordered button "Download CV" that links to ./Sirshen_Moodley_CV.pdf
+- Opens in a new tab
+
+---
+
+NAVIGATION:
+- Fixed top nav, transparent on hero, dark background on scroll
+- Logo left: "SM" monogram in Cormorant Garamond gold
+- Links right: Work, About, Contact
+- Mobile: hamburger menu that slides in from the right as a full-screen overlay
+- All nav links smooth scroll to their sections
+
+---
+
+PERFORMANCE AND MOBILE:
+- All images lazy loaded with loading="lazy"
+- IntersectionObserver for all scroll animations, not scroll event listeners
+- On mobile (under 768px): remove custom cursor, simplify animations to fade-in only (no wipe), stack all work pieces full width, reduce hero text size
+- Ensure touch-friendly tap targets minimum 44px
+
+---
+
+FOOTER:
+- Minimal: copyright line, portfolio link studio.simmico.co.za
+- One line, centred, small text
+
+---
+
+The overall feeling should be: a luxury design studio, not a freelancer's portfolio page. Every spacing decision, every timing curve, every typographic choice should feel intentional and considered. Think Browns Jewellers meets a Parisian design atelier.
