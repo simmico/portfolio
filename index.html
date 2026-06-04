@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sirshen Moodley — Johannesburg-based graphic designer specialising in brand identity, campaign design and digital.">
-  <title>Sirshen Moodley — Graphic Designer</title>
+  <meta name="description" content="Sirshen Moodley, Johannesburg-based graphic designer specialising in brand identity, campaign design and digital.">
+  <title>Sirshen Moodley | Graphic Designer</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231e1e1e'/><text x='16' y='23' text-anchor='middle' font-family='Georgia,serif' font-size='15' font-weight='600' fill='%23B8965A'>SM</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -69,7 +70,7 @@
     @media (max-width: 768px) { #cursor { display: none; } }
 
     /* ===== NAVIGATION ===== */
-    nav {
+    nav#nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 1000;
@@ -80,7 +81,7 @@
       transition: background 0.5s ease, padding 0.4s ease, backdrop-filter 0.5s ease;
     }
 
-    nav.scrolled {
+    nav#nav.scrolled {
       background: rgba(30, 30, 30, 0.96);
       padding: 1.1rem 3.5rem;
       backdrop-filter: blur(12px);
@@ -175,8 +176,8 @@
     .mobile-menu ul a:hover { color: var(--gold); }
 
     @media (max-width: 768px) {
-      nav { padding: 1.25rem 1.5rem; }
-      nav.scrolled { padding: 1rem 1.5rem; }
+      nav#nav { padding: 1.25rem 1.5rem; }
+      nav#nav.scrolled { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
     }
@@ -424,16 +425,15 @@
 
     .work-image-inner img {
       width: 100%;
-      height: 115%;
+      height: 100%;
       object-fit: cover;
       display: block;
       opacity: 0;
-      transition: opacity 0.01s ease 0s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform, opacity;
-      transform: scale(1) translateY(-7%);
+      transition: opacity 0.4s ease 0.38s;
+      will-change: opacity;
     }
 
-    .work-item.reveal-active .work-image-inner img {
+    .work-item.reveal-active .work-image-inner img:not(.c-slide) {
       opacity: 1;
       transition: opacity 0.4s ease 0.38s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -563,13 +563,16 @@
       .reveal-overlay { display: none; }
 
       .work-image-inner img {
-        height: 100%;
-        transform: none !important;
         opacity: 0;
         transition: opacity 0.6s ease;
       }
 
-      .work-item.reveal-active .work-image-inner img {
+      .work-item.reveal-active .work-image-inner img:not(.c-slide) {
+        opacity: 1;
+        transition-delay: 0s;
+      }
+
+      .work-item.reveal-active .c-slide--active {
         opacity: 1;
         transition-delay: 0s;
       }
@@ -586,6 +589,64 @@
       }
 
       .work-hover-overlay { display: none; }
+    }
+
+    /* ===== CAROUSEL ===== */
+    /* Non-first slides stack absolutely; first slide stays in flow so the
+       container grows to the image's natural height — no fixed aspect-ratio needed */
+    .has-carousel .c-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.45s ease 0.3s;
+      will-change: opacity;
+    }
+
+    .has-carousel .c-slide:first-child {
+      position: relative;
+      inset: auto;
+      height: auto;
+      object-fit: initial;
+    }
+
+    .work-item.reveal-active .has-carousel .c-slide--active {
+      opacity: 1;
+    }
+
+    .has-carousel.cx-on .c-slide {
+      transition: opacity 0.45s ease 0s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .c-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.9rem 0 0;
+    }
+
+    .c-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid var(--muted);
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      min-width: 10px;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .c-dot--active {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    @media (max-width: 768px) {
+      .has-carousel .c-slide { transition-delay: 0s; }
     }
 
     /* ===== ABOUT SECTION ===== */
@@ -794,10 +855,12 @@
   </div>
 
   <div class="work-grid">
+
+  <!-- 01 Magnum -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
-        <img src="Images/mag%20classic.jpg" alt="Magnum Classic Digital Campaign" loading="lazy">
+        <img src="Images/mag.jpg" alt="Magnum Digital Campaign" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
           <p>Minimal luxury. A study in restraint for one of the world's most iconic ice cream brands.</p>
@@ -812,15 +875,21 @@
     </div>
   </div>
 
+  <!-- 02 Coricraft -->
   <div class="work-item">
     <div class="work-image-container">
-      <div class="work-image-inner">
-        <img src="Images/CORICRAFT.jpg" alt="Coricraft Digital Campaign" loading="lazy">
+      <div class="work-image-inner has-carousel">
+        <img src="Images/co1.jpg" alt="Coricraft Digital Campaign" class="c-slide c-slide--active" loading="lazy">
+        <img src="Images/co2.jpg" alt="Coricraft Digital Campaign" class="c-slide" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
           <p>Premium retail campaign across a triptych format. Warm tones, editorial typography, considered negative space.</p>
         </div>
       </div>
+      <nav class="c-dots" aria-label="Image navigation">
+        <button class="c-dot c-dot--active" data-idx="0" aria-label="Image 1"></button>
+        <button class="c-dot" data-idx="1" aria-label="Image 2"></button>
+      </nav>
     </div>
     <div class="work-text">
       <div class="work-number">02</div>
@@ -830,64 +899,106 @@
     </div>
   </div>
 
+  <!-- 03 RCL Foods -->
   <div class="work-item">
     <div class="work-image-container">
-      <div class="work-image-inner">
-        <img src="Images/krispy%20cream.jpg" alt="Krispy Kreme Digital Campaign" loading="lazy">
+      <div class="work-image-inner has-carousel">
+        <img src="Images/rcl1.jpg" alt="RCL Foods Digital Campaign" class="c-slide c-slide--active" loading="lazy">
+        <img src="Images/rcl2.jpg" alt="RCL Foods Digital Campaign" class="c-slide" loading="lazy">
+        <img src="Images/rcl3.jpg" alt="RCL Foods Digital Campaign" class="c-slide" loading="lazy">
+        <img src="Images/rcl4.jpg" alt="RCL Foods Digital Campaign" class="c-slide" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Multi-brand FMCG campaign across a diverse product portfolio. Brand consistency at scale.</p>
+        </div>
+      </div>
+      <nav class="c-dots" aria-label="Image navigation">
+        <button class="c-dot c-dot--active" data-idx="0" aria-label="Image 1"></button>
+        <button class="c-dot" data-idx="1" aria-label="Image 2"></button>
+        <button class="c-dot" data-idx="2" aria-label="Image 3"></button>
+        <button class="c-dot" data-idx="3" aria-label="Image 4"></button>
+      </nav>
+    </div>
+    <div class="work-text">
+      <div class="work-number">03</div>
+      <h3 class="work-client">RCL Foods</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <!-- 04 Krispy Kreme -->
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner has-carousel">
+        <img src="Images/krispy1.jpg" alt="Krispy Kreme Digital Campaign" class="c-slide c-slide--active" loading="lazy">
+        <img src="Images/krispy2.jpg" alt="Krispy Kreme Digital Campaign" class="c-slide" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
           <p>Dark and dramatic. A high-contrast editorial approach to a World Chocolate Day promotion.</p>
         </div>
       </div>
+      <nav class="c-dots" aria-label="Image navigation">
+        <button class="c-dot c-dot--active" data-idx="0" aria-label="Image 1"></button>
+        <button class="c-dot" data-idx="1" aria-label="Image 2"></button>
+      </nav>
     </div>
     <div class="work-text">
-      <div class="work-number">03</div>
+      <div class="work-number">04</div>
       <h3 class="work-client">Krispy Kreme</h3>
       <p class="work-category">Digital Campaign</p>
       <div class="work-rule"></div>
     </div>
   </div>
 
+  <!-- 05 Monster Energy -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
-        <img src="Images/scoop.jpg" alt="Paul's Homemade Ice Cream Brand Identity" loading="lazy">
+        <img src="Images/monster.jpg" alt="Monster Energy Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Raw energy. Bold graphic language built for a brand that refuses to be ignored.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">05</div>
+      <h3 class="work-client">Monster Energy</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <!-- 06 Paul's Homemade Ice Cream -->
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner has-carousel">
+        <img src="Images/paul1.jpg" alt="Paul's Homemade Ice Cream Brand Identity" class="c-slide c-slide--active" loading="lazy">
+        <img src="Images/paul2.jpg" alt="Paul's Homemade Ice Cream Brand Identity" class="c-slide" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
           <p>Playful typographic composition where the product becomes part of the word. Bold and confident.</p>
         </div>
       </div>
+      <nav class="c-dots" aria-label="Image navigation">
+        <button class="c-dot c-dot--active" data-idx="0" aria-label="Image 1"></button>
+        <button class="c-dot" data-idx="1" aria-label="Image 2"></button>
+      </nav>
     </div>
     <div class="work-text">
-      <div class="work-number">04</div>
+      <div class="work-number">06</div>
       <h3 class="work-client">Paul's Homemade Ice Cream</h3>
       <p class="work-category">Brand Identity</p>
       <div class="work-rule"></div>
     </div>
   </div>
 
+  <!-- 07 Guess -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
-        <img src="Images/SUNDAE.jpg" alt="Sundae Digital Campaign" loading="lazy">
-        <div class="reveal-overlay" aria-hidden="true"></div>
-        <div class="work-hover-overlay" aria-hidden="true">
-          <p>A bold multi-panel beauty and lifestyle campaign. Energetic, youthful, visually layered.</p>
-        </div>
-      </div>
-    </div>
-    <div class="work-text">
-      <div class="work-number">05</div>
-      <h3 class="work-client">Sundae</h3>
-      <p class="work-category">Digital Campaign</p>
-      <div class="work-rule"></div>
-    </div>
-  </div>
-
-  <div class="work-item">
-    <div class="work-image-container">
-      <div class="work-image-inner">
-        <img src="Images/GUESS.jpg" alt="Guess Digital Campaign" loading="lazy">
+        <img src="Images/guess.jpg" alt="Guess Digital Campaign" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
           <p>Fashion retail triptych. Clean model photography paired with considered graphic treatments.</p>
@@ -895,17 +1006,18 @@
       </div>
     </div>
     <div class="work-text">
-      <div class="work-number">06</div>
+      <div class="work-number">07</div>
       <h3 class="work-client">Guess</h3>
       <p class="work-category">Digital Campaign</p>
       <div class="work-rule"></div>
     </div>
   </div>
 
+  <!-- 08 Pringle of Scotland -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
-        <img src="Images/PRINGLE.jpg" alt="Pringle of Scotland Digital Campaign" loading="lazy">
+        <img src="Images/pringle.jpg" alt="Pringle of Scotland Digital Campaign" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
           <p>Premium fashion apparel. Restrained layout, heritage brand energy.</p>
@@ -913,13 +1025,14 @@
       </div>
     </div>
     <div class="work-text">
-      <div class="work-number">07</div>
+      <div class="work-number">08</div>
       <h3 class="work-client">Pringle of Scotland</h3>
       <p class="work-category">Digital Campaign</p>
       <div class="work-rule"></div>
     </div>
   </div>
 
+  <!-- 09 Lancewood -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
@@ -931,35 +1044,18 @@
       </div>
     </div>
     <div class="work-text">
-      <div class="work-number">08</div>
+      <div class="work-number">09</div>
       <h3 class="work-client">Lancewood</h3>
       <p class="work-category">Digital Campaign</p>
       <div class="work-rule"></div>
     </div>
   </div>
 
+  <!-- 10 Jungle -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
-        <img src="Images/Tropica.jpg" alt="Clover Tropika Digital Campaign" loading="lazy">
-        <div class="reveal-overlay" aria-hidden="true"></div>
-        <div class="work-hover-overlay" aria-hidden="true">
-          <p>Tropical campaign energy. Layered product photography, illustrative backgrounds, script typography.</p>
-        </div>
-      </div>
-    </div>
-    <div class="work-text">
-      <div class="work-number">09</div>
-      <h3 class="work-client">Clover Tropika</h3>
-      <p class="work-category">Digital Campaign</p>
-      <div class="work-rule"></div>
-    </div>
-  </div>
-
-  <div class="work-item">
-    <div class="work-image-container">
-      <div class="work-image-inner">
-        <img src="Images/jungle%20energy%20drink.jpg" alt="Jungle Digital Campaign" loading="lazy">
+        <img src="Images/jungle-energy-drink.jpg" alt="Jungle Digital Campaign" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
           <p>Clean product campaign with illustrative environment. Brand consistency across a product range.</p>
@@ -974,6 +1070,7 @@
     </div>
   </div>
 
+  <!-- 11 Nola -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
@@ -992,28 +1089,49 @@
     </div>
   </div>
 
+  <!-- 12 Clover Tropika -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
-        <img src="Images/pink%20al.jpg" alt="Essence Cosmetics Digital Campaign" loading="lazy">
+        <img src="Images/Tropica.jpg" alt="Clover Tropika Digital Campaign" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
-          <p>Pantone-led cosmetics campaign. Colour story framing with layered product arrangement.</p>
+          <p>Tropical campaign energy. Layered product photography, illustrative backgrounds, script typography.</p>
         </div>
       </div>
     </div>
     <div class="work-text">
       <div class="work-number">12</div>
-      <h3 class="work-client">Essence Cosmetics</h3>
+      <h3 class="work-client">Clover Tropika</h3>
       <p class="work-category">Digital Campaign</p>
       <div class="work-rule"></div>
     </div>
   </div>
 
+  <!-- 13 Aromat -->
   <div class="work-item">
     <div class="work-image-container">
       <div class="work-image-inner">
-        <img src="Images/SUNLIGHT.jpg" alt="Sunlight Unilever Digital Campaign" loading="lazy">
+        <img src="Images/Aromat.jpg" alt="Aromat Digital Campaign" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>South African seasoning icon. Confident product-forward design with vibrant brand energy.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">13</div>
+      <h3 class="work-client">Aromat</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <!-- 14 Sunlight -->
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/sunlight.jpg" alt="Sunlight Unilever Digital Campaign" loading="lazy">
         <div class="reveal-overlay" aria-hidden="true"></div>
         <div class="work-hover-overlay" aria-hidden="true">
           <p>High-impact product visualisation. Explosive energy with colour contrast and dynamic composition.</p>
@@ -1021,12 +1139,118 @@
       </div>
     </div>
     <div class="work-text">
-      <div class="work-number">13</div>
+      <div class="work-number">14</div>
       <h3 class="work-client">Sunlight (Unilever)</h3>
       <p class="work-category">Digital Campaign</p>
       <div class="work-rule"></div>
     </div>
   </div>
+
+  <!-- 15 Sundae (group A) -->
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner has-carousel">
+        <img src="Images/sun1.jpg" alt="Sundae Digital Campaign" class="c-slide c-slide--active" loading="lazy">
+        <img src="Images/sun%202.jpg" alt="Sundae Digital Campaign" class="c-slide" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>A bold multi-panel beauty and lifestyle campaign. Energetic, youthful, visually layered.</p>
+        </div>
+      </div>
+      <nav class="c-dots" aria-label="Image navigation">
+        <button class="c-dot c-dot--active" data-idx="0" aria-label="Image 1"></button>
+        <button class="c-dot" data-idx="1" aria-label="Image 2"></button>
+      </nav>
+    </div>
+    <div class="work-text">
+      <div class="work-number">15</div>
+      <h3 class="work-client">Sundae</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <!-- 16 Sundae (group B) -->
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner has-carousel">
+        <img src="Images/sun3.jpg" alt="Sundae Campaign" class="c-slide c-slide--active" loading="lazy">
+        <img src="Images/sun4.jpg" alt="Sundae Campaign" class="c-slide" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>A continuation of the visual world. Colour, texture and typographic rhythm in motion.</p>
+        </div>
+      </div>
+      <nav class="c-dots" aria-label="Image navigation">
+        <button class="c-dot c-dot--active" data-idx="0" aria-label="Image 1"></button>
+        <button class="c-dot" data-idx="1" aria-label="Image 2"></button>
+      </nav>
+    </div>
+    <div class="work-text">
+      <div class="work-number">16</div>
+      <h3 class="work-client">Sundae</h3>
+      <p class="work-category">Digital Campaign</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <!-- 17 Global Edge -->
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/mock-global-edge.jpg" alt="Global Edge Concept" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Concept brand identity for a corporate services firm. Clean, authoritative, forward-facing.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">17</div>
+      <h3 class="work-client">Global Edge</h3>
+      <p class="work-category">Concept Work</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <!-- 18 Tape Allied -->
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/mock-tape-allied.jpg" alt="Tape Allied Concept" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Concept campaign for a specialist materials brand. Precision, clarity, industrial resolve.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">18</div>
+      <h3 class="work-client">Tape Allied</h3>
+      <p class="work-category">Concept Work</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
+  <!-- 19 W Cake -->
+  <div class="work-item">
+    <div class="work-image-container">
+      <div class="work-image-inner">
+        <img src="Images/wcake.jpg" alt="W Cake Brand Identity" loading="lazy">
+        <div class="reveal-overlay" aria-hidden="true"></div>
+        <div class="work-hover-overlay" aria-hidden="true">
+          <p>Premium confectionery branding. Delicate detail, artisanal craft, occasion-led design.</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-text">
+      <div class="work-number">19</div>
+      <h3 class="work-client">W Cake</h3>
+      <p class="work-category">Brand Identity</p>
+      <div class="work-rule"></div>
+    </div>
+  </div>
+
   </div><!-- /.work-grid -->
 </section>
 
@@ -1054,7 +1278,7 @@
 
 <!-- Footer -->
 <footer>
-  <p>&copy; 2025 Sirshen Moodley &mdash; <a href="https://studio.simmico.co.za" target="_blank" rel="noopener">studio.simmico.co.za</a></p>
+  <p>&copy; 2025 Sirshen Moodley &middot; <a href="https://studio.simmico.co.za" target="_blank" rel="noopener">studio.simmico.co.za</a></p>
 </footer>
 
 <script>
@@ -1208,8 +1432,7 @@
 
   /* ===== WORK: REVEAL ON SCROLL + IMAGE PARALLAX ===== */
   (function () {
-    const items   = document.querySelectorAll('.work-item');
-    const isMobile = window.innerWidth <= 768;
+    const items = document.querySelectorAll('.work-item');
 
     /* IntersectionObserver for reveal animations */
     const revealObserver = new IntersectionObserver(function (entries) {
@@ -1217,6 +1440,10 @@
         if (entry.isIntersecting && !entry.target.dataset.revealed) {
           entry.target.dataset.revealed = '1';
           entry.target.classList.add('reveal-active');
+          /* Explicitly show the active carousel slide — bypasses any CSS specificity issues */
+          entry.target.querySelectorAll('.has-carousel .c-slide--active').forEach(function (slide) {
+            setTimeout(function () { slide.style.opacity = '1'; }, 300);
+          });
           revealObserver.unobserve(entry.target);
         }
       });
@@ -1224,41 +1451,83 @@
 
     items.forEach(function (item) { revealObserver.observe(item); });
 
-    /* Image parallax + hover scale on desktop */
-    if (!isMobile) {
-      /* Track hover state per image */
-      items.forEach(function (item) {
-        const inner = item.querySelector('.work-image-inner');
-        if (!inner) return;
-        inner.addEventListener('mouseenter', function () { inner.dataset.hovered = '1'; applyTransform(inner); });
-        inner.addEventListener('mouseleave', function () { inner.dataset.hovered = '';  applyTransform(inner); });
+  })();
+
+  /* ===== CAROUSEL ===== */
+  (function () {
+    var INTERVAL = 4000;
+
+    function goToSlide (inner, dotBtns, idx) {
+      inner.classList.add('cx-on');
+      var slides = inner.querySelectorAll('.c-slide');
+
+      slides.forEach(function (slide, i) {
+        var isActive = i === idx;
+        slide.classList.toggle('c-slide--active', isActive);
+        slide.style.opacity = isActive ? '1' : '0';
       });
 
-      function applyTransform (inner) {
-        const img = inner.querySelector('img');
-        if (!img) return;
-        const vhCenter = window.innerHeight / 2;
-        const rect     = inner.getBoundingClientRect();
-        const elCenter = rect.top + rect.height / 2;
-        const offset   = ((elCenter - vhCenter) * 0.08).toFixed(2);
-        const scale    = inner.dataset.hovered ? 1.03 : 1;
-        img.style.transform = 'scale(' + scale + ') translateY(calc(-7% + ' + offset + 'px))';
-        img.style.transition = inner.dataset.hovered
-          ? 'transform 0.6s cubic-bezier(0.4,0,0.2,1)'
-          : 'transform 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease 0.38s';
-      }
+      dotBtns.forEach(function (d, i) {
+        d.classList.toggle('c-dot--active', i === idx);
+      });
+    }
 
-      function updateAllParallax () {
-        items.forEach(function (item) {
-          const inner = item.querySelector('.work-image-inner');
-          if (inner) applyTransform(inner);
+    /* Dots now live in .work-image-container, sibling to .has-carousel */
+    document.querySelectorAll('.work-image-container').forEach(function (container) {
+      var inner = container.querySelector('.has-carousel');
+      if (!inner) return;
+      var slides  = inner.querySelectorAll('.c-slide');
+      var dotBtns = container.querySelectorAll('.c-dot');
+      var timer   = null;
+
+      function currentIndex () {
+        return Array.from(slides).findIndex(function (s) {
+          return s.classList.contains('c-slide--active');
         });
       }
 
-      window.addEventListener('scroll', updateAllParallax, { passive: true });
-      window.addEventListener('resize', updateAllParallax, { passive: true });
-      updateAllParallax();
-    }
+      function advance () {
+        var next = (currentIndex() + 1) % slides.length;
+        goToSlide(inner, dotBtns, next);
+      }
+
+      function startTimer () {
+        clearInterval(timer);
+        timer = setInterval(advance, INTERVAL);
+      }
+
+      /* Dot clicks — reset timer so auto-slide doesn't fire right after */
+      dotBtns.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          goToSlide(inner, dotBtns, parseInt(dot.dataset.idx, 10));
+          startTimer();
+        });
+      });
+
+      /* Touch swipe on the image */
+      var startX = 0, startY = 0;
+      inner.addEventListener('touchstart', function (e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+
+      inner.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - startX;
+        var dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+          var current = currentIndex();
+          var next = dx < 0
+            ? Math.min(current + 1, slides.length - 1)
+            : Math.max(current - 1, 0);
+          if (next !== current) {
+            goToSlide(inner, dotBtns, next);
+            startTimer();
+          }
+        }
+      }, { passive: true });
+
+      startTimer();
+    });
   })();
 </script>
 </body>
