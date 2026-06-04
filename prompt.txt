@@ -8,6 +8,8 @@ Install this and use this:
 npm install -g ui-pro-cli
 
 
+
+
 Build a stunning single-page portfolio website for graphic designer Sirshen Moodley. This must be production-grade, fully mobile responsive, and hosted as a single index.html with all CSS and JS embedded. any words should not have em dashes, ai slop and must be UK English
 
 FONTS: Cormorant Garamond (serif, headings) and Montserrat (sans, body) from Google Fonts.
